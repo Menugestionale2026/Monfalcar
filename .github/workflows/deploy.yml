@@ -1,0 +1,58 @@
+name: Pubblica il sito su GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+      # Controllo dei tipi: segnala gli errori ma non blocca la pubblicazione
+      - run: npm run typecheck
+        continue-on-error: true
+      # Senza l'indirizzo dell'app Google il sito andrebbe online in modalità demo: meglio fermarsi e dirlo.
+      - name: Controlla che il sito sia collegato a Google
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
+        run: |
+          if [ -z "$VITE_API_URL" ]; then
+            echo "::error::Manca la variabile VITE_API_URL (Settings > Secrets and variables > Actions > Variables). Senza, il sito andrebbe online in modalita demo. Vedi README, punto 3.4."
+            exit 1
+          fi
+      - run: npm run build
+        env:
+          # Valori da impostare in: Settings > Secrets and variables > Actions > Variables
+          # Indirizzo dell'app web Google (finisce con /exec): vedi README, punto 3.3
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
+          # Con dominio personalizzato imposta la variabile VITE_BASE a "/"
+          VITE_BASE: ${{ vars.VITE_BASE || format('/{0}/', github.event.repository.name) }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
