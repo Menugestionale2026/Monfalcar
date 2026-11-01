@@ -29,7 +29,7 @@ const MESSAGES: Record<ApiErrorCode, string> = {
   too_many_pending:
     'Hai già diverse richieste in attesa di risposta. Attendi la nostra conferma oppure chiamaci.',
   too_many_requests: 'Ci sono troppe richieste in questo momento. Riprova tra un po’ oppure chiamaci.',
-  consent_required: 'Per continuare devi acconsentire al trattamento dei dati.',
+  consent_required: 'Per continuare conferma di aver letto l’informativa privacy.',
   invalid_input: 'Controlla i dati inseriti: qualcosa non è corretto.',
   invalid_credentials: 'Email o password non corrette.',
   locked: 'Troppi tentativi sbagliati. Riprova tra 15 minuti oppure usa “Password dimenticata?”.',

@@ -51,7 +51,7 @@ export function InfoRequestForm({
     if (!EMAIL_RE.test(email.trim())) next.email = 'Inserisci un indirizzo email valido.';
     if (phone.trim() !== '' && !phoneOk(phone)) next.phone = 'Il numero di telefono non sembra corretto.';
     if (message.trim().length < 5) next.message = 'Scrivi un breve messaggio.';
-    if (!consent) next.consent = 'Per inviare la richiesta devi acconsentire al trattamento dei dati.';
+    if (!consent) next.consent = 'Per inviare la richiesta conferma di aver letto l’informativa privacy.';
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
@@ -96,7 +96,7 @@ export function InfoRequestForm({
       <TextAreaField label={messageLabel} required placeholder={messagePlaceholder} value={message} onChange={(e) => setMessage(e.target.value)} error={errors.message} />
       <Honeypot value={trap} onChange={setTrap} />
       <CheckField checked={consent} onChange={(e) => setConsent(e.target.checked)} error={errors.consent}>
-        Ho letto l’<Link to="/privacy" className="font-semibold text-brand-blue underline">informativa privacy</Link> e acconsento al trattamento dei miei dati per essere ricontattato.
+        Ho letto l’<Link to="/privacy" className="font-semibold text-brand-blue underline">informativa privacy</Link> e so che userete i miei dati per rispondermi. *
       </CheckField>
       {sendError && (
         <p role="alert" className="rounded-xl border border-[#F2B8B5] bg-[#FDECEA] p-3 font-semibold text-[#8A1C13]">

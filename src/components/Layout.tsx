@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { api } from '../lib/api';
-import { business } from '../config/business';
+import { business, legal } from '../config/business';
 import { useBusiness } from '../lib/siteInfo';
 import { hoursSummary } from '../lib/hours';
 import { useAsync } from '../lib/useAsync';
@@ -188,8 +188,16 @@ function Footer() {
           </Link>
         </div>
       </div>
-      <div className="container-page mt-10 border-t border-white/15 pt-6 text-sm text-[#C9D6EE]">
-        © {new Date().getFullYear()} {business.name} · {biz.vat}
+      <div className="container-page mt-10 border-t border-white/15 pt-6 text-sm leading-relaxed text-[#C9D6EE]">
+        <p>
+          © {new Date().getFullYear()} {legal.companyName}
+        </p>
+        <p className="mt-1">
+          Sede legale: {legal.seat} · {biz.vat} · REA {legal.rea} ({legal.registryOffice}) · PEC{' '}
+          <a href={`mailto:${legal.pec}`} className="text-[#C9D6EE] underline hover:text-white">
+            {legal.pec}
+          </a>
+        </p>
       </div>
     </footer>
   );

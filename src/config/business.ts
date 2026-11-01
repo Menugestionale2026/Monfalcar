@@ -1,6 +1,7 @@
 // =====================================================================
-// DATI DELL'AZIENDA - da completare prima della pubblicazione.
-// I valori tra parentesi quadre sono segnaposto: sostituiscili con quelli reali.
+// DATI DELL'AZIENDA - valori di riserva.
+// Il sito mostra prima di tutto i dati salvati dall'area riservata (Dati dell'attività);
+// questi compaiono solo nei primi istanti di caricamento o se il servizio Google non risponde.
 // =====================================================================
 
 export const business = {
@@ -8,22 +9,40 @@ export const business = {
   tagline: 'Officina meccanica, vendita e acquisto di auto, noleggio.',
 
   /** Telefono come si legge sul sito */
-  phone: '[+39 000 000 0000]',
+  phone: '0481 711504',
   /** Telefono per il link "Chiama": solo cifre, con prefisso (es. +390481123456) */
-  phoneLink: '',
+  phoneLink: '+390481711504',
   /** Numero WhatsApp: solo cifre, con prefisso internazionale e senza + (es. 390481123456) */
-  whatsapp: '',
-  email: '[info@dominio.it]',
+  whatsapp: '393801765875',
+  email: 'monfalcar@libero.it',
 
-  address: '[Via e numero civico]',
-  city: '[CAP Città]',
-  vat: '[P.IVA 00000000000]',
+  address: 'Via Timavo 24',
+  city: '34074 Monfalcone (GO)',
+  vat: 'P.IVA 01122150319',
 
   /** Coordinate per la mappa (da Google Maps: tasto destro sul punto). Lascia null per nascondere la mappa. */
   map: { lat: null as number | null, lon: null as number | null },
 
   /** Tempo di risposta mostrato nei messaggi del sito */
   replyTime: 'entro il giorno lavorativo successivo',
+};
+
+/**
+ * Dati legali dell'impresa: compaiono in fondo a ogni pagina e nell'informativa privacy.
+ * Cambiano di rado (sede, forma giuridica, numero REA, PEC): se cambiano, si modificano qui.
+ * Telefono, email, orari e P.IVA invece si cambiano dall'area riservata.
+ */
+export const legal = {
+  /** Ragione sociale completa, come risulta in Camera di Commercio */
+  companyName: 'MONFALCAR S.N.C. DI GASSER DAVIDE',
+  legalForm: 'Società in nome collettivo',
+  /** Sede legale (coincide con l'officina) */
+  seat: 'Via Timavo 24, 34074 Monfalcone (GO)',
+  /** Ufficio del Registro delle Imprese presso cui l'impresa è iscritta */
+  registryOffice: 'Camera di Commercio Venezia Giulia',
+  /** Numero REA */
+  rea: 'GO-73592',
+  pec: 'monfalcarsnc@legalmail.it',
 };
 
 export interface Testimonial {

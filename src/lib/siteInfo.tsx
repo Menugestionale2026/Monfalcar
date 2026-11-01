@@ -42,6 +42,12 @@ export function useSavedSiteInfo(): SiteInfo | null {
 
 const pick = (value: string | undefined, fallback: string): string => (value && value.trim() ? value.trim() : fallback);
 
+/** "01122150319" diventa "P.IVA 01122150319"; ciò che è già scritto per esteso resta com'è. */
+const vatLabel = (value: string): string => {
+  const digits = value.replace(/\s/g, '');
+  return /^\d{11}$/.test(digits) ? `P.IVA ${digits}` : value;
+};
+
 /** I dati dell'attività da mostrare sul sito: quelli dei gestori, con i valori di riserva dove mancano. */
 export function useBusiness() {
   const { info } = useContext(SiteInfoContext);
@@ -59,7 +65,7 @@ export function useBusiness() {
       email: pick(info?.email, business.email),
       address: pick(info?.address, business.address),
       city: pick(info?.city, business.city),
-      vat: pick(info?.vat, business.vat),
+      vat: vatLabel(pick(info?.vat, business.vat)),
       replyTime: pick(info?.reply_time, business.replyTime),
       map: { lat, lon },
       /** Link "Chiama": undefined finché non c'è un numero valido */

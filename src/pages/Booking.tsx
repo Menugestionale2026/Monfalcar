@@ -150,7 +150,7 @@ export function BookingPage() {
     if (name.trim().length < 2) next.name = 'Inserisci il tuo nome e cognome.';
     if (!EMAIL_RE.test(email.trim())) next.email = 'Inserisci un indirizzo email valido.';
     if (!phoneOk(phone)) next.phone = 'Inserisci un numero di telefono valido.';
-    if (!consentPrivacy) next.consent = 'Per prenotare devi acconsentire al trattamento dei dati.';
+    if (!consentPrivacy) next.consent = 'Per prenotare conferma di aver letto l’informativa privacy.';
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -471,10 +471,10 @@ export function BookingPage() {
           <TextAreaField label="Note (facoltativo)" value={note} onChange={(e) => setNote(e.target.value)} />
           <Honeypot value={trap} onChange={setTrap} />
           <CheckField checked={consentPrivacy} onChange={(e) => { setConsentPrivacy(e.target.checked); clearError('consent'); }} error={errors.consent}>
-            Ho letto l’<Link to="/privacy" className="font-semibold text-brand-blue underline">informativa privacy</Link> e acconsento al trattamento dei miei dati per gestire la prenotazione. *
+            Ho letto l’<Link to="/privacy" className="font-semibold text-brand-blue underline">informativa privacy</Link> e so che i miei dati servono a gestire la prenotazione. *
           </CheckField>
           <CheckField checked={consentMarketing} onChange={(e) => setConsentMarketing(e.target.checked)}>
-            Desidero ricevere novità e promozioni di {business.name} (facoltativo).
+            Desidero ricevere via email novità e promozioni di {business.name} (facoltativo: puoi revocare il consenso quando vuoi).
           </CheckField>
 
           <div className="flex flex-wrap gap-3 pt-2">

@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '../lib/api';
 import { business } from '../config/business';
 import { useBusiness } from '../lib/siteInfo';
@@ -13,6 +15,28 @@ function mapSrc(lat: number, lon: number): string {
   const d = 0.004;
   const bbox = [lon - d, lat - d, lon + d, lat + d].join('%2C');
   return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lon}`;
+}
+
+/** La mappa è di OpenStreetMap (servizio esterno): si carica solo dopo il clic, così non trasmette l'IP a chi non la vuole. */
+function MapEmbed({ lat, lon, title }: { lat: number; lon: number; title: string }) {
+  const [show, setShow] = useState(false);
+  return (
+    <div className="mt-8 overflow-hidden rounded-2xl border border-brand-line">
+      {show ? (
+        <iframe title={title} src={mapSrc(lat, lon)} className="h-72 w-full border-0" referrerPolicy="no-referrer" />
+      ) : (
+        <div className="flex h-72 flex-col items-center justify-center gap-3 bg-brand-soft p-6 text-center">
+          <button type="button" className="btn btn-blue" onClick={() => setShow(true)}>
+            Mostra la mappa
+          </button>
+          <p className="max-w-sm text-sm text-brand-muted">
+            Caricando la mappa ti colleghi a OpenStreetMap, un servizio esterno che vede il tuo indirizzo IP.{' '}
+            <Link to="/privacy" className="font-semibold text-brand-blue underline">Informativa privacy</Link>
+          </p>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function Item({ icon, title, children }: { icon: IconName; title: string; children: ReactNode }) {
@@ -78,11 +102,7 @@ export function ContactsPage() {
             </Item>
           </ul>
 
-          {lat !== null && lon !== null && (
-            <div className="mt-8 overflow-hidden rounded-2xl border border-brand-line">
-              <iframe title={`Mappa: ${biz.address}, ${biz.city}`} src={mapSrc(lat, lon)} className="h-72 w-full border-0" loading="lazy" referrerPolicy="no-referrer" />
-            </div>
-          )}
+          {lat !== null && lon !== null && <MapEmbed lat={lat} lon={lon} title={`Mappa: ${biz.address}, ${biz.city}`} />}
         </div>
 
         <section aria-labelledby="scrivici-t" className="card h-fit p-5 md:p-7">

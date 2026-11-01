@@ -73,8 +73,10 @@ una guida "Come provarla" per chi vede l'anteprima per la prima volta.
 **Telefono, WhatsApp, email, indirizzo, partita IVA e mappa non vanno più scritti nel codice**: dopo il collegamento a Google
 (punto 3) si inseriscono da **/admin → Dati dell'attività** e il sito (e le email) si aggiornano subito. Il link
 "Chiama" e quello WhatsApp si ricavano dal numero (senza prefisso si presume Italia).
-I valori tra parentesi quadre `[...]` in **`src/config/business.ts`** sono solo segnaposto provvisori, mostrati
-finché non salvate i vostri (e in modalità demo).
+I valori in **`src/config/business.ts`** (`business`) sono solo di riserva: compaiono nei primi istanti di
+caricamento o se il servizio Google non risponde. I **dati legali** (ragione sociale, sede legale, numero REA,
+PEC: oggetto `legal` nello stesso file) cambiano di rado e si modificano lì; compaiono nel piè di pagina di ogni
+pagina e nell'informativa privacy.
 
 In `src/config/business.ts` restano da rivedere i testi:
 
@@ -85,9 +87,10 @@ Da rivedere anche:
 
 - **`src/pages/Services.tsx`**: gli elenchi puntati dei servizi sono testi di esempio; correggili in base a ciò
   che offrite davvero (es. permuta, finanziamento, ritiro in sede).
-- **`src/pages/Privacy.tsx`**: è un **modello**. Va completato (tempi di conservazione, sede dei server) e fatto
-  controllare da un consulente privacy prima della pubblicazione. I dati dei clienti stanno nel Foglio Google
-  dell'attività e le email passano da Gmail: la pagina lo dice, ma va riletta con il consulente.
+- **`src/pages/Privacy.tsx`**: informativa ai sensi dell'art. 13 GDPR, già completata con i dati dell'impresa
+  e con conservazione di 24 mesi. Va aggiornata se cambiano fornitori, tempi o funzioni del sito (e riletta ogni
+  tanto con un consulente privacy). I dati dei clienti stanno nel Foglio Google dell'attività e le email passano da
+  Gmail: la pagina lo dice. Il Foglio non cancella nulla da solo: i dati più vecchi di 24 mesi vanno tolti a mano.
 - **Orari e durate**: vedi il punto 3.8.
 - **Logo e foto**: il logo è in `src/assets/logo.png` (blu, per le pagine chiare) e `src/assets/logo-white.png`
   (bianco, per il fondo scuro del piè di pagina); la foto della Home è `src/assets/hero.webp`; l'icona della
